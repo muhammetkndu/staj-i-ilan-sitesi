@@ -4,10 +4,12 @@ import Home from "./pages/Home";
 import JobDetail from "./pages/JobDetail";
 import Favorites from "./pages/Favorites";
 import Jobs from "./pages/Jobs";
+import { FavoritesProvider } from "./context/FavoritesContext";
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-gray-100">
+    <FavoritesProvider>
+      <div className="min-h-screen bg-gray-100">
         <Navbar />
 
         <Routes>
@@ -16,10 +18,10 @@ export default function App() {
           <Route path="/jobs/:slug" element={<JobDetail />} />
           <Route path="/favorites" element={<Favorites />} />
         </Routes>
-    </div>
-  )
+      </div>
+    </FavoritesProvider>
+  );
 }
-
 
 
   

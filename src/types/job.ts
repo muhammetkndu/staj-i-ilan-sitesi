@@ -7,6 +7,7 @@ export interface Job{
     remote: boolean;
     description: string;
     createdAt: string;
+    salary?: string;
 }
 
 // sadece apiden gelen ham veriyi temsil eder

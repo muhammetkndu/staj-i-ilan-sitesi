@@ -13,78 +13,116 @@ export default function Jobs() {
   } = useJobs();
 
   if (loading) {
-    return <div className="p-10 text-center">Yükleniyor...</div>;
+    return <div className="p-20 text-center text-lg">⏳ Yükleniyor...</div>;
   }
 
   if (error) {
-    return <div className="p-10 text-center text-red-500">{error}</div>;
+    return <div className="p-20 text-center text-red-500">{error}</div>;
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-sky-50 to-purple-50 py-12">
       <div className="max-w-7xl mx-auto px-4">
 
         {/* HEADER */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-extrabold text-gray-900 mb-2">
-            İş İlanları
+        <div className="mb-14 text-center">
+          <h1 className="text-5xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
+            Staj & İş İlanları
           </h1>
           <p className="text-gray-600 text-lg">
-            Hayalinizdeki işi bulun
+            Kariyerine yön verecek fırsatları keşfet
           </p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-6">
+        <div className="flex flex-col xl:flex-row gap-10">
 
           {/* JOB LIST */}
-          <div className="flex-1">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {jobs.length === 0 && (
-                <p className="text-gray-500">Sonuç bulunamadı</p>
-              )}
+          <div className="flex-1 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
 
-              {jobs.map((job) => (
-                <Link
-                  to={`/jobs/${job.slug}`}
-                  state={{job}}
-                  key={job.id}
-                  className="group"
-                >
-                  <div className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all h-full flex flex-col">
-                    <h3 className="text-xl font-bold mb-2 group-hover:text-blue-600">
-                      {job.title}
-                    </h3>
+            {jobs.length === 0 && (
+              <p className="text-gray-500">Sonuç bulunamadı</p>
+            )}
 
-                    <p className="text-gray-600 mb-2">{job.company}</p>
+            {jobs.map((job) => (
+              <Link
+                key={job.id}
+                to={`/jobs/${job.slug}`}
+                state={{ job }}
+                className="group relative"
+              >
+                {/* GLOW */}
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-3xl opacity-0 group-hover:opacity-100 blur transition" />
 
-                    <p className="text-sm text-gray-500 mb-2">
+                <div className="relative bg-white/80 backdrop-blur rounded-3xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 h-full flex flex-col">
+
+                  {/* TOP */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      {/* LOGO */}
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 text-white flex items-center justify-center font-bold text-lg">
+                        {job.company.charAt(0)}
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition">
+                          {job.title}
+                        </h3>
+                        <p className="text-sm text-gray-500">
+                          {job.company}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* FAVORITE */}
+                    <span className="text-gray-400 group-hover:text-red-500 transition text-xl">
+                      ♥
+                    </span>
+                  </div>
+
+                  {/* INFO */}
+                  <div className="flex flex-wrap gap-2 mb-4 text-xs">
+                    <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full">
                       📍 {job.location}
-                    </p>
+                    </span>
 
                     {job.remote && (
-                      <span className="inline-block text-xs bg-green-100 text-green-700 px-2 py-1 rounded mb-3">
-                        Remote
+                      <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full">
+                        🌍 Remote
                       </span>
                     )}
 
-                    <p className="text-sm text-gray-500 line-clamp-3 mb-4">
-                      {job.description}
-                    </p>
-
-                    <button className="mt-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                      Detaylara Git
-                    </button>
+                    <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full">
+                      🆕 Yeni
+                    </span>
                   </div>
-                </Link>
-              ))}
-            </div>
+
+                  {/* DESC */}
+                  <p className="text-sm text-gray-600 line-clamp-3 mb-6">
+                    {job.description}
+                  </p>
+
+                  {/* FOOTER */}
+                  <div className="mt-auto flex items-center justify-between">
+                    <span className="text-xs text-gray-400">
+                      Detayları incele
+                    </span>
+                    <span className="text-blue-600 font-bold group-hover:translate-x-1 transition">
+                      →
+                    </span>
+                  </div>
+
+                </div>
+              </Link>
+            ))}
           </div>
 
           {/* SIDEBAR */}
-          <div className="lg:w-80">
-            <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
+          <div className="xl:w-80">
+            <div className="bg-white/80 backdrop-blur rounded-3xl shadow-xl p-6 sticky top-24">
 
-              <h2 className="text-xl font-bold mb-6">Filtreler</h2>
+              <h2 className="text-xl font-bold mb-6">
+                🎯 Filtreler
+              </h2>
 
               {/* SEARCH */}
               <div className="mb-6">
@@ -93,19 +131,20 @@ export default function Jobs() {
                 </label>
                 <input
                   type="text"
-                  placeholder="Pozisyon veya şirket"
+                  placeholder="Pozisyon, şirket..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full px-3 py-2 border rounded-lg"
+                  className="w-full px-4 py-3 rounded-xl border focus:ring-2 focus:ring-blue-500 outline-none"
                 />
               </div>
 
               {/* REMOTE */}
-              <label className="flex items-center gap-2">
+              <label className="flex items-center gap-3 text-sm font-medium">
                 <input
                   type="checkbox"
                   checked={onlyRemote}
                   onChange={(e) => setOnlyRemote(e.target.checked)}
+                  className="w-4 h-4"
                 />
                 Sadece Remote
               </label>
